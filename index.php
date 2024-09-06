@@ -38,12 +38,12 @@ if ($method == 'get' and $route == '/') {
         }
 
     } elseif ($method == 'get' and $segments[1] == 'testconnection') {
-        $url = "localhost";
-        $database = "echangeJeune";
-        $port = "3306";
-        $user = "Admin";
-        $password = "Azerty13";
         $type = "mysql";
+        $url = "localhost";
+        $port = "default";
+        $database = "echangeJeune";
+        $user = "root";
+        $password = "toto";
 
         $api->test($type, $url, $port, $database, $user, $password);
     }
