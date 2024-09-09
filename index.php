@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Safebase;
 
 use Safebase\api\tachesCron;
-use Safebase\api\testconnection;
+use Safebase\api\ClientDB;
 use Safebase\controller\CntrlAppli;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -20,8 +20,31 @@ $method = strtolower($_SERVER['REQUEST_METHOD']);
 $segments = explode('/', trim($route, '/'));
 // echo $route . ' - ' . $method;
 print_r($segments);
+echo ('<br>');
+//valeurs en dur pour une DB mysql
+$type = "mysql";
+// $host = "localhost";
+// $port = "default";
+// $db_name = "echangeJeune";
+// $username = "root";
+// $password = "toto";
+
+$host = 'localhost';
+$db_name = 'super-reminder';
+$port = 'default';
+$username = 'root';
+$password = 'toto';
+
+//valeurs en dur pour une DB pgsql
+// $type = 'pgsql';
+// $host = 'localhost';
+// $db_name = 'testpostgressql';
+// $port = '5432';
+// $username = 'postgres';
+// $password = 'toto';
+
 $cntrl = new CntrlAppli;
-$api = new testconnection;
+$api = new ClientDB($type, $host, $port, $db_name, $username, $password);
 $cron = new TachesCron;
 //-----------------------------------------------------------------------------------------------
 if ($method == 'get' and $route == '/') {
@@ -29,25 +52,19 @@ if ($method == 'get' and $route == '/') {
 } elseif ($method == 'get' and $segments[0] == 'api') {
     // Routes vers CRON
     if (isset($segments[2]) and $segments[1] == 'cron') {
-        echo('cron');
+        echo ('cron');
         if (isset($segments[2]) and $segments[2] == 'create') {
-            echo('create');
+            echo ('create');
             $cron->createCron();
         } else if (isset($segments[2]) and $segments[2] == 'delete') {
             $cron->deleteTaskCron();
         }
-
     } elseif ($method == 'get' and $segments[1] == 'testconnection') {
-        $type = "mysql";
-        $url = "localhost";
-        $port = "default";
-        $database = "echangeJeune";
-        $user = "root";
-        $password = "toto";
-
-        $api->test($type, $url, $port, $database, $user, $password);
+        $api->testConnection();
+    } elseif ($method == 'get' and $segments[1] == 'backup') {
+        $api->createBackup();
     }
-// route vers index
+    // route vers index
 } else {
     $cntrl->getIndex();
 }

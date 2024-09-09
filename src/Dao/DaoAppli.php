@@ -43,11 +43,10 @@ class DaoAppli
                 $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (\PDOException $e) {
                 $monErreur = $this::retourneErreur($e->getCode(), $e->getMessage());
-                die($e->getCode() . ":" . $monErreur);
+                // die($e->getCode() . ":" . $monErreur);
+                echo ($monErreur);
             }
         }
-        echo ($monErreur);
-
         return $this->db;
     }
 
@@ -58,7 +57,6 @@ class DaoAppli
             if (strpos($message, 'Integrity') && (strpos($message, 'v_ema'))) {
                 return 'cet email existe déjà!';
             }
-        
         } elseif ($codeErr == '1049') {
             if (strpos($message, 'inconnue')) {
                 return 'Impossible de trouver la base de données!';
