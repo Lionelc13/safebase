@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Safebase;
 
-use Safebase\api\tachesCron;
+use Safebase\model\Model;
+use Safebase\api\tacheCron;
 use Safebase\api\ClientDB;
 use Safebase\controller\CntrlAppli;
 
 // phpinfo();
 // die();
 require_once __DIR__ . '/vendor/autoload.php';
-
+require_once('config.php');
 /* router de l'application */
 
 //ex: localhost:3000/ressource?niveau=2
@@ -49,19 +50,30 @@ $password = 'toto';
 
 $cntrl = new CntrlAppli;
 $api = new ClientDB($type, $host, $port, $db_name, $username, $password);
-$cron = new TachesCron;
+// $cron = new TacheCron;
+// $appDB = new Model;
 //-----------------------------------------------------------------------------------------------
 if ($method == 'get' and $route == '/') {
     $cntrl->getIndex();
 } elseif ($method == 'get' and $segments[0] == 'api') {
     // Routes vers CRON
-    if (isset($segments[2]) and $segments[1] == 'cron') {
-        echo ('cron');
+    if (isset($segments[1]) and $segments[1] == 'cron') {
+        echo ('<br>route cron<br>');
         if (isset($segments[2]) and $segments[2] == 'create') {
             echo ('create');
             $cron->createCron();
         } else if (isset($segments[2]) and $segments[2] == 'delete') {
-            $cron->deleteTaskCron();
+            $cron->deleteTask();
+        } else if (isset($segments[2]) and $segments[2] == 'test1') {
+            $taskname = 'test25';
+            $taskSchedule = 'mois';
+            $timeSet = '22:10';
+            $startingDate = '10/10/2024'; //yyyy-mm-dd
+            $scriptPath = 'PC:\wamp64\bin\php\php8.2.18\php.exe';
+            $clientDB_id = '1';
+            $cron = new TacheCron($taskname, $taskSchedule, $timeSet, $startingDate, $scriptPath, $clientDB_id);
+            echo 'route test1 <br>';
+            $cron->createCron();
         }
     } elseif ($method == 'get' and $segments[1] == 'testconnection') {
         $api->testConnection();

@@ -6,4 +6,4 @@ $filePath = __DIR__ . '/logs.log';
 $text = 'Hé ouiii !';
 
 // Écrire le texte dans le fichier
-file_put_contents($filePath, $text); 
+file_put_contents($filePath, $text, FILE_APPEND); 

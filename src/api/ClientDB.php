@@ -3,6 +3,7 @@
 namespace Safebase\api;
 
 use Safebase\dao\DaoAppli;
+use Safebase\api\TacheCron;
 
 class ClientDB
 {
@@ -43,7 +44,17 @@ class ClientDB
         }
     }
 
-    // public function createCRON() {}
+    public function createCRON()
+    {
+        $taskname = $_POST[$this->db_name];
+        $taskSchedule = $_POST[''];
+        $timeSet = $_POST[''];
+        $startingDate = $_POST[''];
+        $scriptPath = $_POST[''];
+        $clientDB_id = $_POST[''];
+        //     paramétrer un CRON 
+        $cron = new TacheCron($taskname, $taskSchedule, $timeSet, $startingDate, $scriptPath, $clientDB_id);
+    }
 
     public function createBackup()
     {
@@ -60,6 +71,9 @@ class ClientDB
             echo ("Le dossier '.$directory.' a été créé. ");
         }
         $this->backupExec();
+        if (isset($_POST['taskschedule'])) {
+            $this->createCRON();
+        }
     }
 
     private function backupExec()
@@ -90,7 +104,8 @@ class ClientDB
                 break;
             case 1:
                 echo 'Une erreur s\'est produite lors de l\'exportation de <b>' . $this->db_name . '</b> vers ' . getcwd() . '/' . $ExportPath;
-                //écrire ici dans le journal d'alerte failDBdump
+                // écrire ici dans le journal d'alerte failDBdump
+                // requête de  type insert dans la table journal_alert
                 break;
             default:
                 echo 'Une erreur d\'exportation s\'est produite, veuillez vérifier les informations de connexion.';

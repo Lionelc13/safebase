@@ -1,7 +1,7 @@
 <?php
 
 // Chemin complet vers l'exécutable PHP et le script PHP
-$phpPath = 'C:\wamp64\bin\php\php8.2.0\php.exe';
+$phpPath = PHP_PATH;
 $scriptPath = 'C:\wamp64\www\safebase\src\api\cronPHP\job1.php';
 
 // Vérifie si le système d'exploitation est Windows
