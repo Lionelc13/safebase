@@ -35,6 +35,10 @@
             <input type="text" name="username" id="username">
         </div>
         <div>
+            <label for="used_type">type d'utilisation : </label>
+            <input type="text" name="used_type" id="used_type">
+        </div>
+        <div>
             <label for="password">mot de passe : </label>
             <input type="password" name="password" id="password">
         </div>

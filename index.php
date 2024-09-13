@@ -109,7 +109,9 @@ switch ($segments[0]) {
         $clientDBCtrl = new ClientDB;
         switch ($method) {
             case 'get':
-                $clientDBCtrl->test();
+                echo 'route get clientDB';
+                //trouver une solution pour lancer le test avec les mêmes infos que le formulaire d'enregistrement de clientDB
+                $clientDBCtrl->test($type, $host, $port, $db_name, $useType, $username, $password);
                 break;
             case 'post':
                 $clientDBCtrl->createClientDB();

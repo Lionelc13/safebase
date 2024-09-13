@@ -8,16 +8,16 @@ use \PDOException;
 
 class clientDbEntity extends Model
 {
-    private $id;
+    private $idBD;
     private $type;
     private $host;
     private $port;
     private $db_name;
     private $username;
     private $password;
-    private $used_type;
+    private $useType;
 
-    public function __construct($type, $host, $port, $db_name, $username, $password)
+    public function __construct($type, $host, $port, $db_name, $username, $useType, $password)
     {
         $this->table = 'client_database';
         $this->getConnection();
@@ -27,6 +27,7 @@ class clientDbEntity extends Model
         $this->port = $port;
         $this->db_name = $db_name;
         $this->username = $username;
+        $this->useType = $useType;
         $this->password = $password;
     }
 
@@ -60,9 +61,20 @@ class clientDbEntity extends Model
         }
     }
 
-    public function insertDB($type, $host, $port, $db_name, $username, $password)
+    public function insertDB($type, $host, $port, $db_name, $username, $useType, $password)
     {
         // requête d'insert des params de la DBcliente en DB
         echo ('<br>insertClientDB<br>');
+        $sql = "INSERT INTO " . $this->table . " (nom, password ,user_database ,url ,port ,used_type, FK_TYPE) VALUES (:nom, :password, :user_database, :url, :port, :used_type, :FK_TYPE)";
+        $query = $this->_connexion->prepare($sql);
+        $query->bindParam(':nom', $db_name,  PDO::PARAM_STR);
+        $query->bindParam(':password', $password,  PDO::PARAM_STR);
+        $query->bindParam(':user_database', $username,  PDO::PARAM_STR);
+        $query->bindParam(':url', $host,  PDO::PARAM_STR);
+        $query->bindParam(':port', $port,  PDO::PARAM_STR);
+        $query->bindParam(':used_type', $useType,  PDO::PARAM_STR);
+        // le type doit être l'id du type de bd : mysql ou pgsql
+        $query->bindParam(':FK_TYPE', $type,  PDO::PARAM_INT);
+        $query->execute();
     }
 }
