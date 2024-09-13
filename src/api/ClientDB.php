@@ -71,9 +71,10 @@ class ClientDB
             echo ("Le dossier '.$directory.' a été créé. ");
         }
         $this->backupExec();
-        if (isset($_POST['taskschedule'])) {
-            $this->createCRON();
-        }
+        // if (isset($_POST['taskschedule'])) {
+        //     $this->createCRON();
+        // }
+        
     }
 
     private function backupExec()
@@ -88,7 +89,7 @@ class ClientDB
             $command = 'mysqldump --opt --port=' . $this->port . ' -h ' . $this->host . ' -u ' . $this->username . ' -p' . $this->password . ' ' . $this->db_name . ' > "' . $ExportPath . '"';
         } elseif ($this->type == 'pgsql') {
             // pg_dump -U utilisateur -h hôte -p port nom_de_la_base > fichier_de_dump.sql
-            $command = 'set PGPASSWORD=' . $this->password . '&& pg_dump -U ' . $this->username . ' -h ' . $this->host . ' -p' . $this->port . ' ' . $this->db_name . ' > ' . $ExportPath . '';
+            $command = 'set PGPASSWORD=' . $this->password . '&& pg_dump -U ' . $this->username . ' -h ' . $this->host . ' -p ' . $this->port . ' ' . $this->db_name . ' > ' . $ExportPath . '';
         }
 
         exec($command, $output, $result);

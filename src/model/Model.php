@@ -5,15 +5,17 @@ namespace Safebase\model;
 use \PDO as PDO;
 use \PDOException;
 
-class Model
+abstract class Model
 {
-    // infos de connexion
+    // infos de connexion à la DB de l'appli
+    private $type = 'mysql';
+    private $port = '3306';
     private $host = APP_DBHOST;
     private $db_name = APP_DBNAME;
     private $username = APP_DBUSERNAME;
     private $password = APP_DBPWD;
 
-    // Propriété qui contiendra l'instance de la connexion à la base de donnée
+    // Propriété qui contiendra l'instance de la connexion à la base de données
     protected ?PDO $_connexion;
     public $table;
     public array $id;
@@ -32,22 +34,16 @@ class Model
     {
         // On supprime la connexion précédente
         $this->_connexion = null;
-        // On essaie de se connecter à la base
         try {
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ];
-            $this->_connexion = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->db_name,
-                $this->username,
-                $this->password,
-                $options
-            );
+            $this->_connexion = new PDO($this->type . ":host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name, $this->username, $this->password, $options);
             $this->_connexion->exec("set names utf8");
             echo ('<br>app DATABASE connected !<br>');
         } catch (PDOException $exception) {
-            throw $exception;
+            echo "Erreur de connexion à la base de données : " . $exception->getMessage();
         }
     }
 
@@ -81,8 +77,12 @@ class Model
      * @param string $limit
      * @return array
      */
-    public function getAll(string $order = "", $limit = ""): array
+    public function getAll(string $order = "", $limit = "")
     {
+        if (!$this->_connexion) {
+            throw new \RuntimeException("La connexion à la base de données n'est pas établie.");
+        }
+
         $sql = "SELECT * FROM " . $this->table;
         if ($order != "") {
             $sql .= " ORDER BY " . $order;
@@ -90,26 +90,9 @@ class Model
         if ($limit != "") {
             $sql .= " LIMIT " . $limit;
         }
+        echo ($sql);
         $query = $this->_connexion->prepare($sql);
         $query->execute();
         return $query->fetchAll();
-    }
-
-    public function insertCRON($clientDB_id, $taskname, $taskSchedule, $timeSet, $startingDate): void
-    {
-        echo ('<br>insertion d\'un cron dans la db de l\'application<br>'); {
-            // Construction de la requête SQL d'insertion
-            $sql = "INSERT INTO " . $this->table . " (nom, recurrence, heure, date_demarrage, FK_DATABASE)";
-            $sql .= " VALUES (:taskname, :taskSchedule, :timeSet, :startingDate, :clientDB_id)";
-
-            $query = $this->_connexion->prepare($sql);
-            $query->bindParam(':taskname', $taskname,  PDO::PARAM_STR);
-            $query->bindParam(':taskSchedule', $taskSchedule,  PDO::PARAM_STR);
-            $query->bindParam(':timeSet', $timeSet,  PDO::PARAM_STR);
-            $query->bindParam(':startingDate', $startingDate,  PDO::PARAM_STR);
-            $query->bindParam(':clientDB_id', $clientDB_id,  PDO::PARAM_INT);
-            $query->execute();
-            echo ($sql);
-        }
     }
 }

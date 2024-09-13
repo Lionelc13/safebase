@@ -1,11 +1,12 @@
 <?php
 
-namespace Safebase\api;
+namespace Safebase\Controller;
 
 use DateTime;
 use Safebase\model\Model;
+use Safebase\model\entity\cronTask as c;
 
-class TacheCron
+class CronTask
 {
     private $taskname; // nom de la tâche récurrente
     private $taskSchedule; // récurrence de la tâche, une seule fois ou /jour, /semaine ou /mois 
@@ -163,8 +164,8 @@ class TacheCron
     {
         $startDate = DateTime::createFromFormat('d/m/Y', $this->startingDate);
         $startDate = $startDate->format('Y-m-d');
-        $DBapp = new Model;
+        $DBapp = new c;
         $DBapp->table = 'tache_cron';
-        // $DBapp->insertCRON($this->clientDB_id, $this->taskname, $this->taskSchedule, $this->timeSet, $startDate);
+        $DBapp->insertCRON($this->clientDB_id, $this->taskname, $this->taskSchedule, $this->timeSet, $startDate);
     }
 }
