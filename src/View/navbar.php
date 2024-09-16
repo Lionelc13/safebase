@@ -14,7 +14,7 @@
                         <i class="fas fa-backward"></i></br>Backups</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Restorations">
+                    <a class="nav-link" href="/restore">
                         <i class="fas fa-trash-can-arrow-up"></i></br>Restorations</a>
                 </li>
                 <li class="nav-item">
