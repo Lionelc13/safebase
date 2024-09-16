@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Create database</title>
 </head>
 <body>
-    <H1>Connection à une base de données</H1>
-    <form action="/database/connection" method="post">
+    <H1>Ajout d'une base de données</H1>
+    <form action="/database/create" method="post">
         <div>
-            <label for="db-name">Nom database: </label><input type="text" id="db-name" name="db-name" required>
+            <label for="name">Nom database: </label><input type="text" id="name" name="name" required>
         </div>
         <div>
             <label for="user">Nom d'utilisateur: </label><input type="text" id="user" name="user" required>
@@ -18,10 +18,15 @@
             <label for="password">Mot de passe: </label><input type="password" id="password" name="password" required>
         </div>
         <div>
-            <label for="type-database">Type de base: </label><input type="text" id="type-database" name="type-database" required>
+            <label for="type">Type de base de données :</label>
+            <select name="type" id="type">
+                <option value="1">mysql</option>
+                <option value="2">pgsql</option>
+            </select>
         </div>
+
         <div>
-            <label for="port">Port: </label><input type="text" id="port" name="port" required>
+            <label for="port">Port: </label><input type="text" id="port" placeholder="default or port number" name="port" required>
         </div>
         <div>
             <label for="host">URL </label><input type="text" id="host" name="host" required>

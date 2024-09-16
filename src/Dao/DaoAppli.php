@@ -17,7 +17,7 @@ class DaoAppli
         $host       = "localhost";
         $db_name    = "safebase";
         $username   = "root";
-        $password   = "toto";
+        $password   = "Postmalone0751@";
 
         if (!isset($this->db)) {
             try {

@@ -22,6 +22,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 $uri = $_SERVER['REQUEST_URI'];
 $route = explode('?', $uri)[0];
 $method = strtolower($_SERVER['REQUEST_METHOD']);
+var_dump($method);
 
 //separe les segments de l'adresse
 $segments = explode('/', trim($route, '/'));
@@ -47,12 +48,14 @@ if ($segments[0] == 'database') {
     } elseif ($method == "post"){
         $database = new Database();
         $database->create();
+        header('Location: /database');
         $cntrl->getIndex();
     } elseif ($method == "put") {
         //methode update to do
     } elseif ($method == "delete"){
         $database = new Database();
         $response = $database->delete($segments[1]);
+        var_dump($segments[1]);
         echo json_encode(['message' => $response]);
         return;
     } 

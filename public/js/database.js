@@ -3,17 +3,22 @@ const buttons = document.getElementsByClassName("delete");
 console.log(buttons);
 
 // Parcours de chaque bouton pour ajouter un écouteur d'événement
-Array.from(buttons).forEach((button) => {
-  button.addEventListener("click", function (event) {
-    console.log("ID du bouton cliqué :", event.target.id);
+Array.from(buttons).forEach(button => {
+  button.addEventListener("click", function () {
+    console.log("ID du bouton cliqué :", button.id);
 
     // Définir l'URL pour la requête DELETE (exemple : "/api/resource/{id}")
-    const url = `/database/${event.target.id}`;
+    const url = `/database/${button.id}/delete`;
 
     fetch(url, {
       method: "DELETE",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text(); // Lire la réponse en texte brut pour le débogage
+        }
+          return response.json();
+      })
       .then((data) => {
         console.log("Réponse du serveur :", data);
       })
