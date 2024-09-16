@@ -21,6 +21,7 @@ Array.from(buttons).forEach(button => {
       })
       .then((data) => {
         console.log("Réponse du serveur :", data);
+        window.location.reload(true);
       })
       .catch((error) => {
         console.error("Erreur lors de la requête :", error);
