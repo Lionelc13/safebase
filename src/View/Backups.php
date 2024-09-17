@@ -41,7 +41,7 @@ require "header.php";
 
 
                             <tr>
-                                <th scope="row"><?= $database['id'] ?></th>
+                                <th scope="row"><?= $backup['id'] ?></th>
                                 <td><?= $database['nom'] ?></td>
                                 <td><?= $database['port'] ?></td>
                                 <td><?= $database['url'] ?></td>
@@ -63,41 +63,18 @@ require "header.php";
                     <form action="/database" method="post">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1>Création d'une tache planifier</h1>
+                                <h1>Création d'une sauvegarde</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="input-group mb-3">
-                                    <label class="form-label" for="name">Nom database: </label>
+                                    <label class="form-label" for="name">Nom database </label>
                                     <input type="text" id="name" name="name" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="user">Date de démarrage </label>
-                                    <input type="text" id="user" name="user" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="password">Mot de passe: </label>
-                                    <input type="password" id="password" name="password" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="type">Type de base de données :</label>
-                                    <select name="type" id="type">
-                                        <option value="1">mysql</option>
-                                        <option value="2">pgsql</option>
-                                    </select>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="port">Port: </label>
-                                    <input type="text" id="port" placeholder="default or port number" name="port" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="host">URL: </label>
-                                    <input type="text" id="host" name="host" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" id="Valider">Save changes</button>
+                                <button type="submit" class="btn btn-success" id="Valider">Save changes</button>
                             </div>
                         </div>
                     </form>
