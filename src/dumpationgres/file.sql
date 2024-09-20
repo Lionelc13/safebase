@@ -24,6 +24,8 @@ SET default_table_access_method = heap;
 -- Name: joueurs; Type: TABLE; Schema: public; Owner: -
 --
 
+DROP TABLE IF EXISTS public.joueurs;
+
 CREATE TABLE public.joueurs (
     id integer NOT NULL,
     nom character varying(50) NOT NULL,

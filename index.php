@@ -8,6 +8,7 @@ use Safebase\api\testconnection;
 use Safebase\Controller\AlertController;
 use Safebase\Controller\BackupController;
 use Safebase\controller\CntrlAppli;
+use Safebase\Controller\CronController;
 use Safebase\Controller\DatabaseController;
 use Safebase\Controller\RestoreController;
 use Safebase\dao\DaoAppli;
@@ -34,9 +35,22 @@ $cntrlAlert = new AlertController;
 $cntrlRestore = new RestoreController;
 
 //-----------------------------------------------------------------------------------------------
+echo "Script atteint<br>";
+echo "URI: " . $uri . "<br>";
+echo "Route: " . $route . "<br>";
+echo "Method: " . $method . "<br>";
+var_dump($segments);
+
+echo ('hello');
+echo "URI: " . $uri . "<br>";
+echo "Route: " . $route . "<br>";
+echo "Method: " . $method . "<br>";
+var_dump($segments);
 
 // routes for databases
 if ($segments[0] == 'database') {
+    var_dump($segments[0]);
+    echo ('hi');
     if ($method=='get'){
         if (isset($segments[1])) {
             // if param:id
@@ -55,9 +69,7 @@ if ($segments[0] == 'database') {
     } elseif ($method == "delete"){
         $database = new Database();
         $response = $database->delete($segments[1]);
-        
         echo json_encode(['message' => $response]);
-        
         return;
 
     } 
@@ -67,11 +79,12 @@ if ($segments[0] == 'database') {
             // if param:id
             //todo
         } else {
-            
+            $cntrlCron = new CronController;
             $cntrlCron->displayCron();
         }
     } elseif ($method == "post"){
-        $cntrlCron->createCron();
+        $cron = new Cron();
+        $cron->create();
     } elseif ($method == "put") {
         if (isset($segments[2])){
             $cntrlCron->updateCron($segments[2]);
@@ -90,6 +103,7 @@ if ($segments[0] == 'database') {
 }
 else 
     $cntrl->getIndex();
+echo ('hello');
 
 
 

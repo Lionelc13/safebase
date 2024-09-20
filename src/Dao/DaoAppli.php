@@ -1,23 +1,23 @@
 <?php
-
 namespace Safebase\dao;
+
+// echo ('hello');
 
 use \PDO as PDO;
 
 //require_once 'src/controller/Utilitaire.php';
 class DaoAppli
 {
-
     protected PDO $db;
     public function __construct(){
          $this->db = $this->getConnection();
     }
     //On essai de se connecter à la base de données
-    private function getConnection() {
-        $host       = "localhost";
+    public function getConnection() {
+        $host       = "mysql";
         $db_name    = "safebase";
-        $username   = "root";
-        $password   = "Postmalone0751@";
+        $username   = "user";
+        $password   = "password";
 
         if (!isset($this->db)) {
             try {
@@ -74,6 +74,15 @@ class DaoAppli
         return $data;
         
     }
+    
+    public function getListBackup(){
+        $statement = $this->db->query(Requete::SEL_BACKUP); 
+        $data=$statement->fetchAll();
+        return $data;
+        
+    }
+
+
 
     public function deleteDatabase($id){
         $statement = $this->db->prepare(Requete::DEL_CLIENT_DATABASE);
@@ -121,7 +130,7 @@ class DaoAppli
         $statement->bindValue(":recurrence",$cron->getRecurrence(),PDO::PARAM_STR);
         $statement->bindValue(":date_demarrage",$dateString,PDO::PARAM_STR);
         $statement->bindValue(":heure",$timeString,PDO::PARAM_STR);
-        $statement->bindValue(":FK_DATABASE",$cron->getIdDatabase()->getId(),PDO::PARAM_STR);
+        $statement->bindValue(":ID_DATABASE",$cron->getIdDatabase()->getId(),PDO::PARAM_STR);
         //On essaie d'ajouter une nouvelle base
         try {
             $statement->execute();

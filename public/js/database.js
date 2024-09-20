@@ -7,7 +7,7 @@ Array.from(buttons).forEach((button) => {
   button.addEventListener("click", function () {
     console.log("ID du bouton cliqué :", button.id);
 
-    const url = `/database/${button.id}/delete`;
+    const url = `/database/${button.id}`;
 
     fetch(url, {
       method: "DELETE",

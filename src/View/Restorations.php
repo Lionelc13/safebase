@@ -7,7 +7,7 @@ require "header.php";
 
 <body>
     <div class="container-fluid d-flex">
-        <?php require_once("NavBar.php") ?>
+        <?php require_once "NavBar.php"?>
         <div class="d-flex flex-column w-100">
             <!-- Container pour le titre et le bouton -->
             <div class="d-flex justify-content-between mb-3">
@@ -68,35 +68,38 @@ require "header.php";
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/database/create" method="post">
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="name">Nom database: </label>
-                                    <input type="text" id="name" name="name" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="user">Nom d'utilisateur: </label>
-                                    <input type="text" id="user" name="user" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="password">Mot de passe: </label>
-                                    <input type="password" id="password" name="password" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="type">Type de base de données :</label>
-                                    <select name="type" id="type">
-                                        <option value="1">mysql</option>
-                                        <option value="2">pgsql</option>
-                                    </select>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="port">Port: </label>
-                                    <input type="text" id="port" placeholder="default or port number" name="port" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <label class="form-label" for="host">URL: </label>
-                                    <input type="text" id="host" name="host" required>
-                                </div>
-                            </form>
+                        <form action="/cron/create" method="post">
+        <div>
+            <label for="nom">Nom de la tache: </label><input type="text" id="nom" name="nom" required>
+        <div>
+
+            <label for="iddatabase">Type de base de données :</label>
+        <select name="nom" id="type">
+            <?php foreach ($databases as $database) {?>
+                <option value=" <?=$database['id']?>"><?=$database['nom']?></option>
+            <?php }?>
+        </select>
+        </div>
+
+
+
+        </div>
+        <div>
+            <label for="iddatabase">Nom database: </label><input type="text" id="iddatabase" name="iddatabase" required>
+        </div>
+        <div>
+            <label for="datestart">Date de démarrage </label><input type="text" id="datestart" name="datestart" required>
+        </div>
+        <div>
+            <label for="heure">Heure: </label><input type="text" id="heure" name="heure" required>
+        </div>
+        <div>
+            <label for="port">Port: </label><input type="text" id="port" name="port" required>
+        </div>
+        <div>
+            <button type="submit" id="Valider">Valider</button>
+        </div>
+    </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
