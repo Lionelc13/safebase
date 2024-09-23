@@ -34,23 +34,9 @@ $cntrlBackup = new BackupController;
 $cntrlAlert = new AlertController;
 $cntrlRestore = new RestoreController;
 
-//-----------------------------------------------------------------------------------------------
-echo "Script atteint<br>";
-echo "URI: " . $uri . "<br>";
-echo "Route: " . $route . "<br>";
-echo "Method: " . $method . "<br>";
-var_dump($segments);
-
-echo ('hello');
-echo "URI: " . $uri . "<br>";
-echo "Route: " . $route . "<br>";
-echo "Method: " . $method . "<br>";
-var_dump($segments);
-
+//----------------------------------------------------------------------------------------------
 // routes for databases
 if ($segments[0] == 'database') {
-    var_dump($segments[0]);
-    echo ('hi');
     if ($method=='get'){
         if (isset($segments[1])) {
             // if param:id
@@ -103,7 +89,6 @@ if ($segments[0] == 'database') {
 }
 else 
     $cntrl->getIndex();
-echo ('hello');
 
 
 
