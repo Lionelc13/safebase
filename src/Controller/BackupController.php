@@ -10,7 +10,10 @@ class BackupController extends CntrlAppli
     {
         $dao = new DaoAppli;
         $backups = $dao->getListBackup();
+<<<<<<< HEAD
         $databases = $dao->getListDatabase();
+=======
+>>>>>>> origin/lionel
         require 'src/view/Backups.php';
     }
     

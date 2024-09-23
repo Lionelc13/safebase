@@ -16,8 +16,13 @@ class DaoAppli
     public function getConnection() {
         $host       = "mysql";
         $db_name    = "safebase";
+<<<<<<< HEAD
         $username   = "user";
         $password   = "password";
+=======
+        $username   = "root";
+        $password   = "toto";
+>>>>>>> origin/lionel
 
         if (!isset($this->db)) {
             try {

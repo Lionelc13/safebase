@@ -55,6 +55,47 @@ require "header.php";
                         <div class="modal-header">
                             <h1>Creer une sauvegarde</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<<<<<<< HEAD
+=======
+                        </div>
+                        <div class="modal-body">
+                            <form action="/cron/create" method="post">
+                                <div>
+                                    <label for="nom">Nom de la tache: </label><input type="text" id="nom" name="nom" required>
+                                    <div>
+
+                                        <label for="iddatabase">Type de base de données :</label>
+                                        <select name="nom" id="type">
+                                            <?php foreach ($databases as $database) { ?>
+                                                <option value=" <?= $database['id'] ?>"><?= $database['nom'] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+
+
+
+                                </div>
+                                <div>
+                                    <label for="iddatabase">Nom database: </label><input type="text" id="iddatabase" name="iddatabase" required>
+                                </div>
+                                <div>
+                                    <label for="datestart">Date de démarrage </label><input type="text" id="datestart" name="datestart" required>
+                                </div>
+                                <div>
+                                    <label for="heure">Heure: </label><input type="text" id="heure" name="heure" required>
+                                </div>
+                                <div>
+                                    <label for="port">Port: </label><input type="text" id="port" name="port" required>
+                                </div>
+                                <div>
+                                    <button type="submit" id="Valider">Valider</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="Valider">Save changes</button>
+                            </div>
+>>>>>>> origin/lionel
                         </div>
                         <div class="modal-body">
                             <form action="/cron/create" method="post">
