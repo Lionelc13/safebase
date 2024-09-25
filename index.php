@@ -4,6 +4,7 @@ declare (strict_types = 1);
 
 namespace Safebase;
 
+use Safebase\entity\Backup;
 use Safebase\api\testconnection;
 use Safebase\Controller\AlertController;
 use Safebase\Controller\BackupController;
@@ -23,7 +24,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 $uri = $_SERVER['REQUEST_URI'];
 $route = explode('?', $uri)[0];
 $method = strtolower($_SERVER['REQUEST_METHOD']);
-
 //separe les segments de l'adresse
 $segments = explode('/', trim($route, '/'));
 $cntrl = new CntrlAppli;
@@ -48,7 +48,7 @@ if ($segments[0] == 'database') {
 
         $database = new Database();
         $database->create();
-        header('Location: /database');
+    
         
     } elseif ($method == "put") {
         //methode update to do
@@ -57,9 +57,19 @@ if ($segments[0] == 'database') {
         $response = $database->delete($segments[1]);
         echo json_encode(['message' => $response]);
         return;
-
     } 
-} elseif ($segments[0] == 'task') {
+} elseif ($segments[0] == 'backup'){
+    if ($method == 'delete'){
+        // Delete backup
+
+        $backup = new Backup();
+        $response = $backup->deleteBackup(intVal($segments[1]));
+        
+        echo json_encode(['message' => $response]);
+        return;
+    }
+}
+elseif ($segments[0] == 'task') {
     if ($method=='get'){
         if (isset($segments[1]) and $segments[1]) {
             // if param:id

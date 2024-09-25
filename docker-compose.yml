@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 version: "3.8"
+=======
+version: '3.8'
+>>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
 
 services:
   php:
     image: php:8.2-apache
+<<<<<<< HEAD
     build: . 
     ports:
       - "8080:80"
@@ -16,6 +21,16 @@ services:
     # depends_on:
       # - mysql
       # - postgres
+=======
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      APACHE_DOCUMENT_ROOT: /var/www/html/public
+    depends_on:
+      - mysql
+>>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
 
   mysql:
     image: mysql:8.0.31
@@ -30,6 +45,7 @@ services:
       - mysql_data:/var/lib/mysql
       - ./grant_privileges.sql:/docker-entrypoint-initdb.d/grant_privileges.sql
       # - ./safebase.sql:/docker-entrypoint-initdb.d/safebase.sql
+<<<<<<< HEAD
       # - ./sql_dumps:/docker-entrypoint-initdb.d  # Dossier pour tes dumps SQL
 
   # postgres:
@@ -43,6 +59,9 @@ services:
   # volumes:
   # - postgres_data:/var/lib/postgresql/data
   # - ./pg_dumps:/docker-entrypoint-initdb.d  # Dossier pour tes dumps PostgreSQL
+=======
+      # - ./sql_dumps:/docker-entrypoint-initdb.d  # Directory for SQL dumps
+>>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -51,14 +70,18 @@ services:
       PMA_ARBITRARY: 1
       PMA_HOST: mysql
       PMA_PORT: 3306
+<<<<<<< HEAD
       PMA_USER: root
       PMA_PASSWORD: rootpassword
+=======
+>>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
       UPLOAD_LIMIT: 20M
     ports:
       - "8081:80"
     depends_on:
       - mysql
 
+<<<<<<< HEAD
   # pgadmin:
   # image: dpage/pgadmin4
   # container_name: pgadmin
@@ -68,6 +91,30 @@ services:
   # - "8082:80"
   # depends_on:
   # - postgres
+=======
+  # Uncomment the following sections if you want to add PostgreSQL and pgAdmin
+  # postgres:
+  #   image: postgres:16
+  #   ports:
+  #     - "5433:5432"
+  #   environment:
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: userpassword
+  #     POSTGRES_DB: my_database
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #     - ./pg_dumps:/docker-entrypoint-initdb.d  # Directory for PostgreSQL dumps
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
+  #   ports:
+  #     - "8082:80"
+  #   depends_on:
+  #     - postgres
+>>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
 
 volumes:
   mysql_data:

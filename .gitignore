@@ -1,5 +1,11 @@
 \backup\
-/vendor/
+\vendor\
 
 composer.json
+<<<<<<< HEAD:.gitignore
 composer.lock
+=======
+composer.lock
+docker-composer.yml
+
+>>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7:src/.gitignore

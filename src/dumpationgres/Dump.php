@@ -15,9 +15,10 @@ class Dump
         $this->db_pass = $db_pass;
         $this->db_user = $db_user;
         $this->db_port = $db_port;
+        $this->Dumpition();
     }
 
-    public function Dumpition($outputFile = 'dumma.sql')
+    public function Dumpition()
     {
         $output = [];
         $retval = null;

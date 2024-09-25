@@ -1,5 +1,7 @@
 <?php
- 
+
+use Safebase\dao\DaoAppli;
+
 class Backup
 {
     private $db_name;
@@ -15,6 +17,12 @@ class Backup
         $this->db_pass = $db_pass;
         $this->db_user = $db_user;
         $this->db_port = $db_port;
+    }
+
+    public function delete($id)
+    {
+        $dao = new DaoAppli();
+        $dao->deleteBackup($id);
     }
 
     public function Backupition($outputFile = 'dummy.sql')

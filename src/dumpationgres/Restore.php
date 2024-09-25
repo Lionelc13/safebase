@@ -8,7 +8,7 @@ class Restore
     private $db_pass;
     private $db_user;
     private $db_port;
-
+    // mysql://user:userpassword@localhost:3307/safe_base
     public function __construct($db_name = 'basepostgres', $db_host = 'localhost', $db_pass = 'Postmalone0751@', $db_user = 'postgres', $db_port = 5432)
     {
         $this->db_name = $db_name;

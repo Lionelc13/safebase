@@ -2,17 +2,17 @@
 
 namespace Safebase\entity;
 
-class Buckup
+use Safebase\dao\DaoAppli;
+
+class Backup
 {
-    private int $id;
+    private ?int $id;
     private ?string $version;
     private ?Database $idDatabase;
-    private ?string $name;
 
-    public function __construct(?int $id,
-        ?string $name,
-        ?string $version,
-        ?Database $idDatabase)
+    public function __construct(?int $id=0,
+        ?string $version='',
+        ?Database $idDatabase= new database())
          {
         $this->id = $id;
         $this->version = $version;
@@ -87,31 +87,14 @@ class Buckup
     public function setIdDatabase(?Database $idDatabase): self
     {
         $this->idDatabase = $idDatabase;
-
         return $this;
     }
 
-    /**
-     * Get the value of name
-     *
-     * @return ?string
-     */
-    public function getName(): ?string
+    public function deleteBackup(int $id)
     {
-        return $this->name;
+        $dao = new DaoAppli;
+        $file =$dao->deleteBackup($id);
+        $command = "Del \ ";
     }
-
-    /**
-     * Set the value of name
-     *
-     * @param ?string $name
-     *
-     * @return self
-     */
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
+    
 }

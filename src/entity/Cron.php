@@ -3,6 +3,7 @@
 namespace Safebase\entity;
 
 use DateTime;
+use Safebase\api\testconnection;
 use Safebase\dao\DaoAppli;
 
 class Cron
@@ -12,21 +13,21 @@ class Cron
     private ?DateTime $dateStart;
     private ?DateTime $heure;
     private ?string $recurrence;
-    private ?Database $idDatabase;
+    private ?Database $database;
 
-    public function __construct(?int $id=0,
+    public function __construct(?int $id=1,
         ?string $name ='',
         ?DateTime $dateStart =null,
         ?DateTime $heure=null,
         ?string $recurrence='',
-        ?Database $idDatabase=null)
+        ?Database $database = new Database())
          {
         $this->id = $id;
         $this->name = $name;
         $this->dateStart = $dateStart;
         $this->heure = $heure;
         $this->recurrence = $recurrence;
-        $this->idDatabase = $idDatabase;
+        $this->database = $database;
     }
 
     public function getId(): int
@@ -87,17 +88,6 @@ class Cron
         return $this;
     }
 
-    public function getIdDatabase(): ?Database
-    {
-        return $this->idDatabase;
-    }
-
-    public function setIdDatabase(?Database $idDatabase): self
-    {
-        $this->idDatabase = $idDatabase;
-        return $this;
-    }
-
     public function listCron()
     {
         $dao = new DaoAppli;
@@ -118,16 +108,65 @@ class Cron
         $dateTime = \DateTime::createFromFormat('Y-m-d', $_POST['datestart']);
         $time = \DateTime::createFromFormat('H:i', $_POST['heure']);
        if ($dateTime and $time) {
-            $database = new Database($_POST['iddatabase']);
-            $cron = new Cron(1, $_POST['nom'], $dateTime, $time, $_POST['recurrence'], $database);
+            // $this->database->setId($_POST['iddatabase']);
+            // $database = new Database();
+            $this->database = $this->database->getDataById($_POST['iddatabase']);
+            $cron = new Cron(1, $_POST['nom'], $dateTime, $time, $_POST['recurrence'], $this->database);
             if ($dao->createNewTask($cron)) {
-                echo ("Tache cron ajoutée avec succès");
-            } else {
+        
+                $CreateDump = new Testconnection();
+                $CreateDump->test($this->database);
+                require_once 'cronExec.php';
+                }
+             else {
                 echo ('echec de l enregistrement');
             }
+        
         } else {
             echo "La conversion a échoué.";
         }
     }
 
+    private function taskWindows()
+    {
+        // Chemin complet vers l'exécutable PHP et le script PHP
+        $phpPath = 'C:\wamp64\bin\php\php8.2.0\php.exe';
+        //$scriptPath = 'C:\wamp64\www\safebase\src\api\cronPHP\job1.php';
+        $scriptPath = 'C:\wamp64\www\safeBase\src\api\TestConnection.php';
+
+        // Vérifie si le système d'exploitation est Windows
+ 
+
+        echo 'Création de la tâche cron sous Windows via PHP...';   
+
+        // Commande pour créer la tâche cron
+        $command = "schtasks /create /tn \"testCronPHP\" /tr \"$phpPath $scriptPath\" /sc minute /mo 1";
+
+        // Exécute la commande
+        exec($command, $output, $result);
+    
+    }
+    /**
+     * Get the value of database
+     *
+     * @return ?Database
+     */
+    public function getDatabase(): ?Database
+    {
+        return $this->database;
+    }
+
+    /**
+     * Set the value of database
+     *
+     * @param ?Database $database
+     *
+     * @return self
+     */
+    public function setDatabase(?Database $database): self
+    {
+        $this->database = $database;
+
+        return $this;
+    }
 }

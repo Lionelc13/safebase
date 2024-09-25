@@ -16,7 +16,7 @@ class Dump
         $this->db_user = $db_user;
         $this->db_port = $db_port;
     }
-
+    
     public function Dumpition($outputFile = 'dummy.sql')
     {
         $output = null;

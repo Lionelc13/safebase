@@ -8,5 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'Symfony\\Component\\Process\\' => array($vendorDir . '/symfony/process'),
     'Safebase\\' => array($baseDir . '/src'),
+<<<<<<< HEAD
+=======
+    'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
+    'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
+>>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
     'Cron\\' => array($vendorDir . '/cron/cron/src', $vendorDir . '/mtdowling/cron-expression/src/Cron'),
 );

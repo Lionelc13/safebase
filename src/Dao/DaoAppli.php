@@ -4,6 +4,8 @@ namespace Safebase\dao;
 // echo ('hello');
 
 use \PDO as PDO;
+use Safebase\entity\Database;
+use Safebase\entity\Type;
 
 //require_once 'src/controller/Utilitaire.php';
 class DaoAppli
@@ -32,21 +34,30 @@ class DaoAppli
     }
 
     public function createNewBase($database): bool
-    {   
-        $requete = Requete::INS_DATABASE;
+    { 
+        $connected = $this->tryConnection($database); 
+        var_dump($connected);
+        if ($connected){
+            $requete = Requete::INS_DATABASE;
+            
+            $statement = $this->db->prepare($requete);
+
+            //$passwordHash=password_hash($database->getpassword(),PASSWORD_DEFAULT);
+
+            $statement->bindValue(":nom",$database->getName(),PDO::PARAM_STR);
+            $statement->bindValue(":password",$database->getPassword(),PDO::PARAM_STR);
+            $statement->bindValue(":port",$database->getPort(),PDO::PARAM_STR);
+            $statement->bindValue(":url",$database->getHost(),PDO::PARAM_STR);
+            $statement->bindValue(":used_type",$database->getusedType(),PDO::PARAM_STR);
+            $statement->bindValue(":user" ,$database->getUserName(),PDO::PARAM_STR);
+            $statement->bindValue(":type_base",$database->getType()->getId(),PDO::PARAM_INT);
+            
+           return $this->tryExecute($statement);
+        } else {
+            
+            return false;
+        }
         
-        $statement = $this->db->prepare($requete);
-
-        $passwordHash=password_hash($database->getpassword(),PASSWORD_DEFAULT);
-
-        $statement->bindValue(":nom",$database->getname(),PDO::PARAM_STR);
-        $statement->bindValue(":password",$passwordHash,PDO::PARAM_STR);
-        $statement->bindValue(":port",$database->getport(),PDO::PARAM_STR);
-        $statement->bindValue(":url",$database->gethost(),PDO::PARAM_STR);
-        $statement->bindValue(":used_type",$database->getusedType(),PDO::PARAM_STR);
-        $statement->bindValue(":user" ,$database->getuserName(),PDO::PARAM_STR);
-        $statement->bindValue(":type_base",$database->gettype(),PDO::PARAM_INT);
-        return $this->tryExecute($statement);
         //On essaie d'ajouter une nouvelle base
         // try {
         //     $statement->execute();
@@ -85,9 +96,30 @@ class DaoAppli
 
 
     public function deleteDatabase($id){
+        
         $statement = $this->db->prepare(Requete::DEL_CLIENT_DATABASE);
-        $statement->bindValue(":id",$id,PDO::PARAM_INT);
+        $statement->bindValue(":id",intval($id),PDO::PARAM_INT);
         return $this->tryExecute($statement);
+        
+    }
+
+    public function selectDatabaseById($id){
+        $statement = $this->db->prepare(Requete::SEL_DB_BY_ID);
+        $statement->bindValue(":id",$id,PDO::PARAM_INT);
+        $statement->execute();
+        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        $type= new Type($data['id_type'], $data['name_type']);
+        $data= new Database($id,
+                             $data['nom'],
+                            $data['password'],
+                            $data['user_database'],
+                            $data['port'],
+                            $type,
+                            $data['used_type'],
+                            $data['url']
+
+                        );
+        return $data;
         
     }
 
@@ -98,23 +130,37 @@ class DaoAppli
         
     }
 
-    // On essai de se connecter à la base de données
-    public function tryConnection($type, $host, $port, $db_name, $username, $password)
+    public function deleteBackup($id){
+        $statement = $this->db->prepare(Requete::DEL_BACKUP);
+        $statement->bindValue(":id",$id,PDO::PARAM_INT);
+        return $this->tryExecute($statement);
+        
+    }
+
+    public function createBackup($id, $version)
     {
-        $monErreur = 'Connection réussie ! ';
+        $statement = $this->db->prepare(Requete::INS_BACKUP);
+        var_dump('id: ' . $id .' version: ' . $version);
+               $statement->bindValue(":id",$id,PDO::PARAM_INT);
+        $statement->bindValue(":version",$version,PDO::PARAM_STR);
+        return $this->tryExecute($statement);
+    }
 
-        if (!isset($this->db)) {
+
+    // On essai de se connecter à la base de données
+    //public function tryConnection($type, $host, $port, $db_name, $username, $password)
+    public function tryConnection($database):bool
+    {
+    
+        // if (isset($this->db)) {
             try {
-                $this->db = new PDO($type . ":host=" . $host . ";port=" . $port . ";dbname=" . $db_name, $username, $password);
-                $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $this->createNewBase($type, $host, $port, $db_name, $username, $password);
+                $connected = new PDO($database->getType()->getName() . ":host=" . $database->getHost() . ";port=" . $database->getPort() . ";dbname=" . $database->getName(), $database->getUserName(), $database->getPassword());
+                $connected->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                return true;
             } catch (\PDOException $e) {
-                return $e;
+               return false;
             }
-        }
-        echo ($monErreur);
-
-        return $this->db;
+        //}
     }
 
 
@@ -130,7 +176,7 @@ class DaoAppli
         $statement->bindValue(":recurrence",$cron->getRecurrence(),PDO::PARAM_STR);
         $statement->bindValue(":date_demarrage",$dateString,PDO::PARAM_STR);
         $statement->bindValue(":heure",$timeString,PDO::PARAM_STR);
-        $statement->bindValue(":ID_DATABASE",$cron->getIdDatabase()->getId(),PDO::PARAM_STR);
+        $statement->bindValue(":ID_DATABASE",$cron->getDatabase()->getId(),PDO::PARAM_STR);
         //On essaie d'ajouter une nouvelle base
         try {
             $statement->execute();

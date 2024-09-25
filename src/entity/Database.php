@@ -2,6 +2,7 @@
 
 namespace Safebase\entity;
 
+use Safebase\Controller\CntrlAppli;
 use Safebase\dao\DaoAppli;
 
 class Database {
@@ -10,7 +11,7 @@ class Database {
     private string $password;
     private string $userName;
     private string $port;
-    private int $type;
+    private Type $type;
     private string $host;
     private DaoAppli $dao;
     private string $usedType;
@@ -21,7 +22,7 @@ public function __construct(
         string $password = '',
         string $userName = '',
         string $port = '3306',
-        int $type = 1,
+        Type $type = new Type(1,'mysql'),
         string $usedType = 'prod',
         string $host = 'localhost'
     ) {
@@ -103,12 +104,12 @@ public function __construct(
         return $this;
     }
 
-    public function getType(): int
+    public function getType(): Type
     {
         return $this->type;
     }
 
-    public function setType(int $type): self
+    public function setType(Type $type): self
     {
         $this->type = $type;
 
@@ -140,16 +141,23 @@ public function __construct(
 
     public function create()
     {
+        $type = new Type(1, 'mysql');
         $database = new Database(name: htmlspecialchars($_POST['name']),
             password: htmlspecialchars($_POST['password']),
             userName: htmlspecialchars($_POST['user']),
             port: htmlspecialchars($_POST['port']),
             host: htmlspecialchars($_POST['host']),
-            type: 1,
+            type: $type,
             usedType: 'prod');
 
         $dao = new DaoAppli;  
-        $this->dao->createNewBase($database);
+        if (($this->dao->createNewBase($database)) == false){
+            echo "echec de l'ajout";
+            $cntrlAppli = new CntrlAppli();
+            $cntrlAppli->getIndex();
+        } else {
+            header('Location: /database');
+        }
     } 
     public function listDatabase():array
     {
@@ -161,5 +169,10 @@ public function __construct(
             return 'Suppression réalisée avec succès!';
         } else 
         return 'echec de la suppression!';
+    }
+    public function getDataById($id):Database
+    {
+        return $this->dao->selectDatabaseById($id);
+        
     }
 }
