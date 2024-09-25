@@ -6,31 +6,24 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit3a44fa74503bcb280838b2c9cf142171
 {
-<<<<<<< HEAD
-=======
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     );
 
->>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
             'Symfony\\Component\\Process\\' => 26,
             'Safebase\\' => 9,
         ),
-        'C' => 
+        'P' => 
         array (
-<<<<<<< HEAD
-            'Cron\\' => 5,
-=======
             'PhpParser\\' => 10,
         ),
         'D' => 
         array (
             'DeepCopy\\' => 9,
->>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
         ),
         'C' => 
         array (
@@ -47,12 +40,6 @@ class ComposerStaticInit3a44fa74503bcb280838b2c9cf142171
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-<<<<<<< HEAD
-        'Cron\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/cron/cron/src',
-            1 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
-=======
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
@@ -60,7 +47,6 @@ class ComposerStaticInit3a44fa74503bcb280838b2c9cf142171
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
->>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
         ),
         'Cron\\' => 
         array (
@@ -71,8 +57,6 @@ class ComposerStaticInit3a44fa74503bcb280838b2c9cf142171
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-<<<<<<< HEAD
-=======
         'PHPUnit\\Event\\Application\\Finished' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Finished.php',
         'PHPUnit\\Event\\Application\\FinishedSubscriber' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/FinishedSubscriber.php',
         'PHPUnit\\Event\\Application\\Started' => __DIR__ . '/..' . '/phpunit/phpunit/src/Event/Events/Application/Started.php',
@@ -1267,7 +1251,6 @@ class ComposerStaticInit3a44fa74503bcb280838b2c9cf142171
         'TheSeer\\Tokenizer\\TokenCollectionException' => __DIR__ . '/..' . '/theseer/tokenizer/src/TokenCollectionException.php',
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
->>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
     );
 
     public static function getInitializer(ClassLoader $loader)

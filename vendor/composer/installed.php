@@ -1,15 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'news/safe-base',
-<<<<<<< HEAD
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
-=======
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'ad6b14205e08e3599ab8c0bd7d81f2527a83c12a',
->>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
+        'reference' => 'bdff50cf9d069046cfc3cf9e22efed3e90a20337',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,42 +14,11 @@
             'pretty_version' => '1.9.0',
             'version' => '1.9.0.0',
             'reference' => '78ca6947e26b3941d89a4a01cc08971e900c054e',
-<<<<<<< HEAD
             'type' => 'library',
             'install_path' => __DIR__ . '/../cron/cron',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'mtdowling/cron-expression' => array(
-            'pretty_version' => 'v1.2.3',
-            'version' => '1.2.3.0',
-            'reference' => '9be552eebcc1ceec9776378f7dcc085246cacca6',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../mtdowling/cron-expression',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'news/safe-base' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
-=======
->>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../cron/cron',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-<<<<<<< HEAD
-        'symfony/process' => array(
-            'pretty_version' => 'v6.4.8',
-            'version' => '6.4.8.0',
-            'reference' => '8d92dd79149f29e89ee0f480254db595f6a6a2c5',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../symfony/process',
-            'aliases' => array(),
-            'dev_requirement' => false,
-=======
         'mtdowling/cron-expression' => array(
             'pretty_version' => 'v1.2.3',
             'version' => '1.2.3.0',
@@ -77,7 +40,7 @@
         'news/safe-base' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'ad6b14205e08e3599ab8c0bd7d81f2527a83c12a',
+            'reference' => 'bdff50cf9d069046cfc3cf9e22efed3e90a20337',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -316,7 +279,6 @@
             'install_path' => __DIR__ . '/../theseer/tokenizer',
             'aliases' => array(),
             'dev_requirement' => true,
->>>>>>> ad7f091a1a9df196286c493db6ac63ebb013fae7
         ),
     ),
 );
