@@ -142,24 +142,41 @@ public function __construct(
 
     public function create()
     {
-        $type = new Type(1, 'mysql');
+        if ($_POST['type'] == "mysql"){
+            $type = new Type(1, 'mysql'); 
+        } else {
+            $type = new Type(2, 'pgsql');
+        }
+        
+        if ((htmlspecialchars($_POST['port']) == 'default') or (htmlspecialchars($_POST['port']) == '')) {
+            if ($type->getName() == 'mysql'){
+                $port = 3306;
+            } else {
+                $port = 3307;  
+            }
+        }  else {
+            $port = intval(htmlspecialchars($_POST['port']));
+        } 
         $database = new Database(name: htmlspecialchars($_POST['name']),
             password: htmlspecialchars($_POST['password']),
             userName: htmlspecialchars($_POST['user']),
-            port: intval(htmlspecialchars($_POST['port'])),
+            port: $port,
             host: htmlspecialchars($_POST['host']),
             type: $type,
             usedType: 'prod');
 
         $dao = new DaoAppli;  
+        $cntrlAppli = new CntrlAppli();
         if (($this->dao->createNewBase($database)) == false){
             echo "echec de l'ajout";
-            $cntrlAppli = new CntrlAppli();
+            
             $cntrlAppli->getIndex();
+            
         // Ne pas utiliser avec Docker
-        // } else {
+         } else {
         //     header('Location: /database');
-        }
+            $cntrlAppli->getIndex();
+         }
     } 
     public function listDatabase():array
     {

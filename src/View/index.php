@@ -80,8 +80,8 @@ require "header.php";
                                 <div class="input-group mb-3">
                                     <label class="form-label" for="type">Type de base de données :</label>
                                     <select name="type" id="type">
-                                        <option value="1">mysql</option>
-                                        <option value="2">pgsql</option>
+                                        <option value="mysql">mysql</option>
+                                        <option value="pgsql">pgsql</option>
                                     </select>
                                 </div>
                                 <div class="input-group mb-3">
